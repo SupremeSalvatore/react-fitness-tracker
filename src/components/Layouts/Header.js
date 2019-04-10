@@ -14,14 +14,14 @@ import {
 import CreateDialog from '../Exercises/Dialogs/CreateDialog';
 
 // import './Header.css';
-const Header = () => {
+const Header = ({muscles, onExerciseCreate}) => {
 	return (
 		<AppBar position="static">
 			<Toolbar>
 				<Typography variant="headline" color="inherit" style={{flex: 1}}>
 					Fitness Tracker
 				</Typography>
-				<CreateDialog />
+				<CreateDialog onCreate={onExerciseCreate} muscles={muscles} />
 			</Toolbar>
 		</AppBar>
 	);
