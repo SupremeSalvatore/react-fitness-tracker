@@ -5,8 +5,12 @@ import {
 	Typography,
 	List,
 	ListItem,
-	ListItemText
+	ListItemText,
+	ListItemSecondaryAction,
+	IconButton
 } from '@material-ui/core';
+import {Delete as DeleteIcon} from '@material-ui/icons';
+
 // import LeftPane from './LeftPane';
 // import RightPane from './RightPane';
 const styles = {
@@ -26,7 +30,8 @@ const Exercises = ({
 		id,
 		title = 'Welcome!',
 		description = 'Please select an exercise from the list on the left'
-	}
+	},
+	onDelete
 }) => {
 	return (
 		<Grid container>
@@ -45,6 +50,11 @@ const Exercises = ({
 									{exercises.map(({id, title}) => (
 										<ListItem key={id} button onClick={() => onSelect(id)}>
 											<ListItemText primary={title} />
+											<ListItemSecondaryAction>
+											<IconButton onClick={()=>{onDelete(id)}}>
+										<DeleteIcon></DeleteIcon>
+											</IconButton>
+											</ListItemSecondaryAction>
 										</ListItem>
 									))}
 								</List>

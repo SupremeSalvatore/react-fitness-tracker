@@ -11,14 +11,17 @@ class App extends Component {
 		exercise: {}
 	};
 	getExercisesByMuscles() {
+		//Even if we delete all exercises categories still remain, add it in 2nd reduce method
+		const initExercises=muscles.reduce((exercises,category)=>({
+			...exercises,[category]:[]
+		}),{})
+		console.log(initExercises)
 		return Object.entries(
 			this.state.exercises.reduce((exercises, exercise) => {
 				const {muscles} = exercise;
-				exercises[muscles] = exercises[muscles]
-					? [...exercises[muscles], exercise]
-					: [exercise];
+				exercises[muscles] = [...exercises[muscles], exercise]
 				return exercises;
-			}, {})
+			}, initExercises)
 		);
 	}
 	handleCategorySelect = category => {
@@ -34,6 +37,11 @@ class App extends Component {
 			exercises: [...exercises, exercise]
 		}));
 	};
+	handleExerciseDelete=id=>{
+		this.setState(({exercises})=>({
+			exercises:exercises.filter(ex=>ex.id!==id)
+		}))
+	}
 	render() {
 		const exercises = this.getExercisesByMuscles();
 		const {category, exercise} = this.state;
@@ -48,6 +56,7 @@ class App extends Component {
 					exercises={exercises}
 					exercise={exercise}
 					onSelect={this.handleExerciseSelect}
+					onDelete={this.handleExerciseDelete}
 				/>
 				<Footer
 					muscles={muscles}
